@@ -1,0 +1,1303 @@
+<style>
+    #niab-rti-wrapper {
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        color: #334155;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: row;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        margin: 20px auto;
+        border: 1px solid #e2e8f0;
+        max-width: 1200px;
+        align-items: flex-start;
+        /* Crucial: allows sticky child to work independently */
+        overflow: visible;
+        /* Changed from hidden to visible */
+    }
+
+    #niab-rti-wrapper * {
+        box-sizing: border-box;
+    }
+
+    /* Sidebar - Stretches to full height and sticks on scroll */
+    #niab-rti-wrapper .niab-rti-sidebar {
+        width: 280px;
+        background: #f8fafc;
+        border-right: 1px solid #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+        gap: 4px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        /* Sticks to the top of the viewport. If you have a sticky WordPress header, change this to the header's height (e.g., top: 80px;) */
+        height: 100vh;
+        /* Takes full height of the screen */
+        align-self: flex-start;
+        overflow-y: auto;
+        /* Adds a scrollbar inside the sidebar if there are too many tabs */
+        z-index: 10;
+        /* Keeps it above the table content */
+    }
+
+    #niab-rti-wrapper .niab-rti-tab {
+        background: transparent;
+        border: none;
+        text-align: left;
+        padding: 15px 25px;
+        width: 100%;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        color: #64748b;
+        transition: all 0.25s ease;
+        border-left: 4px solid transparent;
+        display: flex;
+        align-items: center;
+        line-height: 1.4;
+    }
+
+    #niab-rti-wrapper .niab-rti-tab:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+    }
+
+    #niab-rti-wrapper .niab-rti-tab.niab-active {
+        background: #ffffff;
+        color: #0f2742;
+        border-left: 4px solid #2563eb;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Content Area */
+    #niab-rti-wrapper .niab-rti-content {
+        flex: 1;
+        padding: 35px;
+        background: #ffffff;
+        min-width: 300px;
+        max-width: calc(100% - 280px);
+    }
+
+    #niab-rti-wrapper .niab-rti-tabcontent {
+        display: none;
+        animation: niab-fade 0.4s ease;
+    }
+
+    #niab-rti-wrapper .niab-rti-tabcontent.niab-active-content {
+        display: block;
+    }
+
+    @keyframes niab-fade {
+        from {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Modern Corporate Table Design */
+    #niab-rti-wrapper .niab-rti-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0;
+        font-size: 14px;
+    }
+
+    #niab-rti-wrapper .niab-rti-table th {
+        background: #0f2742;
+        color: #ffffff;
+        padding: 14px 18px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    #niab-rti-wrapper .niab-rti-table td {
+        border-bottom: 1px solid #e2e8f0;
+        padding: 16px 18px;
+        text-align: left;
+        vertical-align: top;
+        transition: background 0.2s ease;
+    }
+
+    /* #niab-rti-wrapper .niab-rti-table tr:hover td { 
+    background: #f8fafc; 
+}  */
+    #niab-rti-wrapper .niab-rti-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Table Columns & Headers */
+    #niab-rti-wrapper .niab-rti-table td.niab-section-header {
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 16px 18px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    #niab-rti-wrapper .niab-rti-table td.niab-sub-header {
+        background: #f1f5f9;
+        color: #0f172a;
+        font-size: 15px;
+        font-weight: 700;
+        padding: 14px 18px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    #niab-rti-wrapper .niab-rti-table td.niab-sno {
+        width: 10%;
+        font-weight: 700;
+        color: #64748b;
+        background: #f8fafc;
+    }
+
+    #niab-rti-wrapper .niab-rti-table td.niab-item {
+        width: 35%;
+        font-weight: 600;
+        color: #0f172a;
+        background: #f8fafc;
+    }
+
+    #niab-rti-wrapper .niab-rti-table td.niab-details {
+        width: 55%;
+        color: #334155;
+    }
+
+    /* Links & Lists */
+    #niab-rti-wrapper .niab-rti-table a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+        border-bottom: 1px dotted #2563eb;
+    }
+
+    #niab-rti-wrapper .niab-rti-table a:hover {
+        color: #1e40af;
+        border-bottom: 1px solid #1e40af;
+    }
+
+    #niab-rti-wrapper .niab-rti-list {
+        margin: 10px 0 0 20px;
+        padding: 0;
+        color: #475569;
+    }
+
+    #niab-rti-wrapper .niab-rti-list li {
+        margin-bottom: 6px;
+    }
+
+    /* Responsive Design for Mobile */
+    /* Responsive Design for Mobile */
+    @media (max-width: 768px) {
+        #niab-rti-wrapper {
+            flex-direction: column;
+        }
+
+        #niab-rti-wrapper .niab-rti-sidebar {
+            width: 100%;
+            flex-direction: row;
+            overflow-x: auto;
+            padding: 10px;
+            gap: 8px;
+            border-right: none;
+            border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
+            position: relative;
+            /* Disables sticky on mobile */
+            top: auto;
+            height: auto;
+            align-self: auto;
+        }
+
+        #niab-rti-wrapper .niab-rti-tab {
+            white-space: nowrap;
+            border-left: none;
+            border-bottom: 4px solid transparent;
+            padding: 10px 15px;
+        }
+
+        #niab-rti-wrapper .niab-rti-tab.niab-active {
+            border-left: none;
+            border-bottom: 4px solid #2563eb;
+            background: #f1f5f9;
+        }
+
+        #niab-rti-wrapper .niab-rti-content {
+            padding: 20px;
+            max-width: 100%;
+        }
+
+        #niab-rti-wrapper .niab-rti-table th {
+            font-size: 12px;
+            padding: 10px;
+        }
+
+        #niab-rti-wrapper .niab-rti-table td {
+            padding: 12px;
+        }
+    }
+</style>
+
+<div id="niab-rti-wrapper">
+    <!-- Left Sidebar Tabs -->
+    <div class="niab-rti-sidebar">
+        <button class="niab-rti-tab niab-active" onclick="niabOpenTab(event, 'niab-tab1')">1. Organisation &
+            Function</button>
+        <button class="niab-rti-tab" onclick="niabOpenTab(event, 'niab-tab2')">2. Budget & Programmes</button>
+        <button class="niab-rti-tab" onclick="niabOpenTab(event, 'niab-tab3')">3. Publicity & Interface</button>
+        <button class="niab-rti-tab" onclick="niabOpenTab(event, 'niab-tab4')">4. E-Governance</button>
+        <button class="niab-rti-tab" onclick="niabOpenTab(event, 'niab-tab5')">5. Info as may be Prescribed</button>
+        <button class="niab-rti-tab" onclick="niabOpenTab(event, 'niab-tab6')">6. Own Initiative Disclosure</button>
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="niab-rti-content">
+
+        <!-- TAB 1: Organisation and Function -->
+        <div id="niab-tab1" class="niab-rti-tabcontent niab-active-content">
+            <table class="niab-rti-table">
+                <tr>
+                    <th>S.No.</th>
+                    <th>Item</th>
+                    <th>Disclosure Details</th>
+                </tr>
+                <tr>
+                    <td colspan="3" class="niab-section-header">1. Organisation and Function</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.1 Particulars of Organisation, Functions and Duties
+                        [Section 4(1)(b)(i)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.1.1</td>
+                    <td class="niab-item">Name and Address of the Organization</td>
+                    <td class="niab-details">National Institute Animal Biotechnology, Hyderabad, Telangana -
+                        500032<br><strong>Website:</strong> <a href="https://www.niab.res.in/"
+                            target="_blank">https://www.niab.res.in/</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.1.2</td>
+                    <td class="niab-item">Head of the organization</td>
+                    <td class="niab-details">Dr. Ravi Kumar Gandham VPPS<br>Email: <a
+                            href="mailto:director@niab.org.in">director@niab.org.in</a><br>Tel No: 040 - 23120102<br>
+                        <!-- <a href="#" target="_blank">Click here to view the message of the Director.</a> -->
+                        <br><a
+                            href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.2_-Formers-Directors-list-new-2.pdf"
+                            target="_blank">Click here to view Former Directors, NIAB, Director</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.1.3</td>
+                    <td class="niab-item">Vision, Mission and Key Objectives</td>
+                    <td class="niab-details"><strong>Vision:</strong> To demonstrate excellence in promoting and
+                        commercializing leads in biotechnology and to produce globally competitive livestock products,
+                        pharmaceuticals and biologicals for animal health care.<br><br><strong>Mission:</strong>
+                        Development of sustainable and globally competitive livestock industry through innovative
+                        technology.<br><br><strong>Key Objectives:</strong> Focus: NIAB will focus on translational
+                        research and foster bio-entrepreneurship in the animal biotechnology sector through:<ul
+                            class="niab-rti-list">
+                            <li>Research in the cutting edge areas of biotechnology for improving health and
+                                productivity.</li>
+                            <li>Production of animal bioreactors in order to strengthen India’s role as a global player
+                                in Pharma, vaccine and enzyme production.</li>
+                            <li>Development of high yielding livestock and poultry from indigenous and global resources.
+                            </li>
+                            <li>Development of strategies for conservation of indigenous livestock and poultry.</li>
+                            <li>Establishment of gene banks for genes of interest.</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.1.4</td>
+                    <td class="niab-item">Functions and Duties</td>
+                    <td class="niab-details"><a
+                            href="https://www.niab.res.in/wp-content/uploads/2026/04/Functions-and-duties.pdf"
+                            target="_blank">View Functions and Duties PDF</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.1.5</td>
+                    <td class="niab-item">Organization Chart</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.5.pdf"
+                            target="_blank">View Organization Chart</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.1.6</td>
+                    <td class="niab-item">Any other details-the genesis, inception, formation of the department and the
+                        HoDs from time to time as well as the committees/ Commissions consulted from time to time have
+                        been dealt</td>
+                    <td class="niab-details">The details about various departments and HoDs can be viewed
+                        here<br><br><strong>Administrative Committees:</strong>
+                        <ul class="niab-rti-list">
+                            <li>Building Committee - <a
+                                    href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.6_BC.pdf"
+                                    target="_blank">Click here</a></li>
+                            <li>Finance Committee - <a
+                                    href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.6_FC.pdf"
+                                    target="_blank">Click here</a></li>
+                            <li>SAC Committee - <a
+                                    href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.6_SAC.pdf"
+                                    target="_blank">Click here</a></li>
+                            <li>ICC on Sexual Harassment - <a href="https://www.niab.res.in/ICC/" target="_blank">Click
+                                    here</a></li>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.2 Power and Duties of its Officers and Employees [Section
+                        4(1) (b)(ii)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.2.1</td>
+                    <td class="niab-item">Powers and Duties of Officers (administrative, financial and judicial)</td>
+                    <td class="niab-details">Office Order(1)<br><a
+                            href="https://www.niab.res.in/wp-content/uploads/2026/06/1.2.1.pdf" target="_blank">Click
+                            here to view Power &
+                            Duties | Faculty Duties</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.2.2</td>
+                    <td class="niab-item">Power and Duties of other Employees</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/06/1.2.1.pdf"
+                            target="_blank">View (2025-26)</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.2.3</td>
+                    <td class="niab-item">Rules/ orders under which powers and duty are derived and Exercised</td>
+                    <td class="niab-details">As Per NIAB Bylaws</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.2.5</td>
+                    <td class="niab-item">Work allocation</td>
+                    <td class="niab-details">The Competent Authority allocates work as per MoE guidelines and NIAB
+                        Statutes.</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.3 Procedure followed in decision-making process [Section
+                        4(1)(b)(iii)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.3.1</td>
+                    <td class="niab-item">Process of decision making Identify key decision-making points</td>
+                    <td class="niab-details">Decisions are taken in accordance with the provisions of the
+                        Act/Statutes/Ordinances/Academic Rules & Regulations / Policies, Rules etc. of the Institute
+                        received from Ministry of Education and the decisions taken by BoG from time to time and
+                        procedures/practices of the Institute. Policy matters are decided at the level of
+                        Director/BoG.<br><br>The Director, Deans, Registrar and Officers of the institute have been
+                        authorised by the Institutes NIT Act and Statutes and through the Delegation of Financial Powers
+                        to take key decisions.<br><br>The Institute has adopted a decentralized administrative
+                        structure, thereby enabling Departments to take decisions in conformity with the rules of the
+                        Institute and within the delegated powers.</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.3.2</td>
+                    <td class="niab-item">Final decision-making authority</td>
+                    <td class="niab-details">The Director in most cases and the Board of Governors in specific cases as
+                        mandated in NIAB Act and Statutes.</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.3.3</td>
+                    <td class="niab-item">Related provisions, acts, rules etc.</td>
+                    <td class="niab-details"><a href="#" target="_blank">Click here to view</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.3.4</td>
+                    <td class="niab-item">Time limit for taking decisions, if any</td>
+                    <td class="niab-details">Time taken for taking various decisions in various sections are as follows:
+                        <ul class="niab-rti-list">
+                            <li>Academics Section : 1- 5 Days</li>
+                            <li>Finance & Accounts : 1- 10 Days</li>
+                            <li>Administration : 1- 10 Days</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.3.5</td>
+                    <td class="niab-item">Channel of supervision and accountability</td>
+                    <td class="niab-details">As per the Organizational Structure and Hierarchy of the institute. <a
+                            href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.5.pdf" target="_blank">Click
+                            here to view the Organization Chart</a></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.4 Norms for Discharge of Functions [Section 4(1)(b)(iv)]
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.4.1</td>
+                    <td class="niab-item">Nature of functions/ services offered</td>
+                    <td class="niab-details">To provide high quality education in science and technology and provide a
+                        creative atmosphere for inter-disciplinary research both by the students and the faculty.</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.4.2</td>
+                    <td class="niab-item">Norms/ standards for functions/ service delivery</td>
+                    <td class="niab-details">Norms and Standards for various activities of the Institute are those as
+                        laid down by the competent authority, such as, the BoG. The Annual Report prepared under the
+                        direction of BoG and its annual meetings along with audited accounts, etc., of the
+                        Institute.<br><br>The Annual Report of the Institute along with Audited Accounts are placed on
+                        the table of both the Houses of the Parliament.<br><br>Admissions to Academic programmes are as
+                        follows:<br>i) PhD admissions as per the Institute Doctoral Ordinances.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.4.3</td>
+                    <td class="niab-item">Process by which these services can be accessed</td>
+                    <td class="niab-details">NA</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.4.4</td>
+                    <td class="niab-item">Time-limit for achieving the targets</td>
+                    <td class="niab-details">As per Sr.No. 1.3.4</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.4.5</td>
+                    <td class="niab-item">Process of redressal of grievances</td>
+                    <td class="niab-details"><a href="#" target="_blank">View process and procedure for redressal of
+                            grievances at the workplace</a><br><a href="#" target="_blank">View Women Cell</a><br><a
+                            href="#" target="_blank">View Grievance Cell</a></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.5 Rules, Regulations, Instructions Manual and Records for
+                        Discharging Functions [Section 4(1)(b)(v)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.5.1</td>
+                    <td class="niab-item">Title and nature of the record/ manual /instruction</td>
+                    <td class="niab-details">The admission of students and research scholars to various undergraduate,
+                        post graduate courses, and PhD is based on guidelines framed for admission to these courses. <a
+                            href="#" target="_blank">Click here to view (S.No. 1 to 3)</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.5.2</td>
+                    <td class="niab-item">List of Rules, regulations, instructions manuals and records.</td>
+                    <td class="niab-details"><a href="#" target="_blank">Click here to view</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.5.3</td>
+                    <td class="niab-item">Acts/ Rules manuals etc.</td>
+                    <td class="niab-details"><a href="#" target="_blank">As Per NIAB Bylaws</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.5.4</td>
+                    <td class="niab-item">Transfer Policy and Transfer Orders</td>
+                    <td class="niab-details">There is no transfer policy for the Institute. </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.6 Categories of Documents held by the Authority under its
+                        Control [Section 4(1)(b) (vi)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.6.1</td>
+                    <td class="niab-item">Categories of documents</td>
+                    <td class="niab-details"><a href="#" target="_blank">Click here to view</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.6.2</td>
+                    <td class="niab-item">Custodian of documents / categories</td>
+                    <td class="niab-details"><a href="#" target="_blank">Click here to view</a></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.7 Boards, Councils, Committees and other Bodies
+                        constituted as part of the Public Authority [Section 4(1)(b)(viii)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.7.1</td>
+                    <td class="niab-item">Name of Boards, Council, Committee etc.</td>
+                    <td class="niab-details" rowspan="2" style="vertical-align: middle;">
+                        <ul class="niab-rti-list">
+                            <li>Building Committee - <a
+                                    href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.6_BC.pdf"
+                                    target="_blank">Click here</a></li>
+                            <li>Finance Committee - <a
+                                    href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.6_FC.pdf"
+                                    target="_blank">Click here</a></li>
+                            <li>SAC Committee - <a
+                                    href="https://www.niab.res.in/wp-content/uploads/2026/06/1.1.6_SAC.pdf"
+                                    target="_blank">Click here</a></li>
+                            <li>ICC on Sexual Harassment - <a href="https://www.niab.res.in/ICC/" target="_blank">Click
+                                    here</a></li>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.7.2</td>
+                    <td class="niab-item">Composition</td>
+                    <td class="niab-details"></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.7.3</td>
+                    <td class="niab-item">Dates from which constituted</td>
+                    <td class="niab-details">As Per NIAB Bylaws.</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.7.4</td>
+                    <td class="niab-item">Term / Tenure</td>
+                    <td class="niab-details">The Boards/Committees are perpetual in nature and are constituted as per
+                        the terms of the Institutes of Technology Act, 1961 and the Statutes of the institute.</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.7.5</td>
+                    <td class="niab-item">Powers and Functions</td>
+                    <td class="niab-details">As Per NIAB Bylaws</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.7.6</td>
+                    <td class="niab-item">Whether their meetings are open to the public?</td>
+                    <td class="niab-details">No</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.7.7</td>
+                    <td class="niab-item">Whether the minutes of the meetings are open to the public?</td>
+                    <td class="niab-details">No</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.7.8</td>
+                    <td class="niab-item">Place where the minutes if open to the public are available?</td>
+                    <td class="niab-details">NA</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.8 Directory of Officers and Employees [Section 4(1) (b)
+                        (ix)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.8.1</td>
+                    <td class="niab-item">Name and designation</td>
+                    <td class="niab-details" rowspan="2" style="vertical-align: middle;"><a href="https://www.niab.res.in/wp-content/uploads/2026/04/Directory.pdf"
+                            target="_blank">Click here for the details</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.8.2</td>
+                    <td class="niab-item">Telephone, fax and email</td>
+                    <td class="niab-details"></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.9 Monthly Remuneration received by Officers and Employees
+                        including system of compensation [Section 4(1) (b) (x)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.9.1</td>
+                    <td class="niab-item">List of employees with Gross monthly remuneration</td>
+                    <td class="niab-details">Salary payment being remitted to the bank accounts of employees on monthly
+                        basis.<br><a href="https://www.niab.res.in/wp-content/uploads/2026/06/1.9.1.pdf"
+                            target="_blank">Pay Structure (2025-26)</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.9.2</td>
+                    <td class="niab-item">System of compensation as provided in its regulations</td>
+                    <td class="niab-details">Benefits and Incentives for the Permanent Employees of the Institute are as
+                        per the 7th CPC guidelines</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.10 Name, Designation and other particulars of Public
+                        Information Officers [Section 4(1) (b) (xvi)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.10.1</td>
+                    <td class="niab-item">Name and designation of the CPIO, APIO and Appellate Authority</td>
+                    <td class="niab-details" rowspan="2" style="vertical-align: middle;"><a
+                            href="https://www.niab.res.in/wp-content/uploads/2026/04/CPIO-details.pdf"
+                            target="_blank">Click here to view</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.10.2</td>
+                    <td class="niab-item">Address, telephone numbers and email of each designated official</td>
+                    <td class="niab-details"></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.11 No. of employees against whom Disciplinary Action has
+                        been proposed / taken [Section 4(2)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.11.1</td>
+                    <td class="niab-item">Pending for Minor penalty or major penalty proceedings</td>
+                    <td class="niab-details">NA</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.11.2</td>
+                    <td class="niab-item">Finalised for Minor penalty or major penalty proceedings</td>
+                    <td class="niab-details">NA</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.12 Programmes to Advance Understanding of RTI [Section 26]
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.12.1</td>
+                    <td class="niab-item">Educational Programmes</td>
+                    <td class="niab-details">NA</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.12.2</td>
+                    <td class="niab-item">Efforts to encourage public authority to participate in these programmes</td>
+                    <td class="niab-details">NIL</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.12.3</td>
+                    <td class="niab-item">Training of CPIO/APIO</td>
+                    <td class="niab-details">NIL</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.12.4</td>
+                    <td class="niab-item">Update & publish guidelines on RTI by the Public Authorities concerned</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/06/1.12.4.png"
+                            target="_blank">View (2025-26)</a></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">1.13 Transfer Policy and Transfer Orders [F No. 1/6/2011- IR
+                        dt. 15.4.2013]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">1.13.1</td>
+                    <td class="niab-item">Transfer Policy and Transfer Orders</td>
+                    <td class="niab-details">No transfer policy.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: Budget and Programmes -->
+        <div id="niab-tab2" class="niab-rti-tabcontent">
+            <table class="niab-rti-table">
+                <tr>
+                    <th>S.No.</th>
+                    <th>Item</th>
+                    <th>Disclosure Details</th>
+                </tr>
+                <tr>
+                    <td colspan="3" class="niab-section-header">2. Budget and Programmes</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">2.1 Budget allocated to each agency including all plans,
+                        proposed expenditure and reports on disbursements made etc. [Section4(1)(b)(xi)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.1.1</td>
+                    <td class="niab-item">Total Budget for the public authority</td>
+                    <td class="niab-details" rowspan="4" style="vertical-align: middle;">
+                        <a href="https://www.niab.res.in/wp-content/uploads/2026/04/budget.pdf" target="_blank">Budget
+                            2025-26</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.1.2</td>
+                    <td class="niab-item">Budget for each agency and plan &amp; programmes</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.1.3</td>
+                    <td class="niab-item">Proposed expenditures</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.1.4</td>
+                    <td class="niab-item">Revised budget for each agency, if any</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.1.5</td>
+                    <td class="niab-item">Report on disbursements made and place where the related reports are available
+                    </td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/04/budget.pdf"
+                            target="_blank">Expenditure Annexure (2025-26)</a><br><a href="#" target="_blank">Annual
+                            Accounts</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.1.6</td>
+                    <td class="niab-item">Information related to procurements (a) Notice/tender enquires, and corrigenda if any thereon, (b) Details of the bids awarded comprising the names of the suppliers of goods/ services being procured, (c) The works contracts concluded – in any such combination of the above-and, (d) The rate/ rates and the total amount at which such procurement or works contract is to be executed.
+                    </td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/04/2025-26-NIAB-Procurement-above-Rs-10L_Purchase.pdf"
+                            target="_blank">View details (2025-26)</a></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">2.2 Foreign and Domestic Tours [F. No. 1/8/2012- IR dt.
+                        11.9.2012]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.2.1</td>
+                    <td class="niab-item">Budget</td>
+                    <td class="niab-details">Specific sub allocation in the budget is not allocated for Foreign and
+                        Domestic Tours</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.2.2</td>
+                    <td class="niab-item">Foreign and domestic Tours by ministries and officials...</td>
+                    <td class="niab-details"><a
+                            href="https://www.niab.res.in/wp-content/uploads/2026/06/2.2.2_Foreign-and-Domestic-tours.pdf"
+                            target="_blank">Travel details (2025-26)</a><br></td>
+                </tr>
+                
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">2.3 Manner of Execution of Subsidy Programme [Section
+                        4(i)(b)(xii)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.3.1</td>
+                    <td class="niab-item">Name of the programme of activity</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.3.2</td>
+                    <td class="niab-item">Objective of the programme</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.3.3</td>
+                    <td class="niab-item">Procedure to avail benefits</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.3.4</td>
+                    <td class="niab-item">Duration of the programme/ scheme</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.3.5</td>
+                    <td class="niab-item">Physical and financial targets of the programme</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.3.6</td>
+                    <td class="niab-item">Nature/ scale of subsidy /amount allotted</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.3.7</td>
+                    <td class="niab-item">Eligibility criteria for grant of subsidy</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.3.8</td>
+                    <td class="niab-item">Details of beneficiaries of subsidy programme</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">2.4 Discretionary and Non-discretionary Grants [F. No.
+                        1/6/2011-IR dt. 15.04.2013]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.4.1</td>
+                    <td class="niab-item">Discretionary and non-discretionary grants/ allocations</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.4.2</td>
+                    <td class="niab-item">Annual accounts of all legal entities who are provided grants</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">2.5 Particulars of Recipients of Concessions, Permits of
+                        Authorizations granted by the Public Authority [Section 4(1) (b) (xiii)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.5.1</td>
+                    <td class="niab-item">Concessions, permits or authorizations granted by public authority</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.5.2</td>
+                    <td class="niab-item">For each concession, permit or authorization granted</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">2.6 CAG & PAC Paras [F No. 1/6/2011- IR dt. 15.4.2013]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">2.6.1</td>
+                    <td class="niab-item">CAG and PAC paras and the action taken reports (ATRs)</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/04/Audit-paras.pdf"
+                            target="_blank">Click here to View</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TAB 3: Publicity and Public Interface -->
+        <div id="niab-tab3" class="niab-rti-tabcontent">
+            <table class="niab-rti-table">
+                <tr>
+                    <th>S.No.</th>
+                    <th>Item</th>
+                    <th>Disclosure Details</th>
+                </tr>
+                <tr>
+                    <td colspan="3" class="niab-section-header">3. Publicity and Public Interface</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">3.1 Particulars for any arrangement for consultation with or
+                        representation by the members of the public in relation to the formulation of policy or
+                        implementation there of [Section 4(1)(b)(vii)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.1</td>
+                    <td class="niab-item">Relevant Acts, Rules, Forms and other documents normally accessed by citizens
+                    </td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.2</td>
+                    <td class="niab-item">Arrangements for consultation with or representation by members of the public
+                    </td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.3</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- Details of Special Purpose Vehicle (SPV)
+                    </td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.4</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- Detailed project reports (DPRs)</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.5</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- Concession agreements</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.6</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- Operation and maintenance manuals</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.7</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- Other documents generated</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.8</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- Information relating to fees, tolls,
+                        revenues</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.9</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- Information relating to outputs and
+                        outcomes</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.10</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- Process of selection of the private sector
+                        party</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.1.11</td>
+                    <td class="niab-item">Public- private partnerships (PPP)- All payment made under the PPP project
+                    </td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">3.2 Are the details of Policies / Decisions, which affect
+                        the public, informed to them? [Section 4(1) (c)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.2.1</td>
+                    <td class="niab-item">Publish all relevant facts while formulating important policies</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.2.2</td>
+                    <td class="niab-item">Outline the Public consultation process</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.2.3</td>
+                    <td class="niab-item">Outline the arrangement for consultation before formulation of policy</td>
+                    <td class="niab-details">Not Applicable</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">3.3 Dissemination of Information widely and in such form and
+                        manner which is easily accessible to the public [Section 4(3)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.3.1</td>
+                    <td class="niab-item">Use of the most effective means of communication - Internet (website)</td>
+                    <td class="niab-details">The information dissemination primarily happens through the Institute’s
+                        Website. <a href="https://www.niab.res.in/" target="_blank">https://www.niab.res.in/</a></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">3.4 Form of accessibility of Information Manual/ Handbook
+                        [Section 4(1)(b)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.4.1</td>
+                    <td class="niab-item">Information manual / handbook available in electronic format</td>
+                    <td class="niab-details"><a href="#" target="_blank">Annual Reports</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.4.2</td>
+                    <td class="niab-item">Information manual / handbook available in Printed format</td>
+                    <td class="niab-details"><a href="#" target="_blank">Annual Reports</a></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">3.5 Whether information manual/ handbook available free of
+                        cost or not [Section 4(1)(b)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.5.1</td>
+                    <td class="niab-item">List of materials available Free of cost</td>
+                    <td class="niab-details" rowspan="2" style="vertical-align: middle;">
+                        <ul
+                            class="niab-rti-list">
+                            <li><a href="#" target="_blank">Annula Reports</a></li>
+                            <li><a href="https://www.niab.res.in/wp-content/uploads/2026/04/EMR-Running-project-details-as-on-date.pdf" target="_blank">List of Ongoing Extra-Mural Projects at NIAB (2025-26)</a></li>
+                            <li><a href="https://www.niab.res.in/wp-content/uploads/2026/06/ClosedProjectDetailsAsOn_31.03.2026.pdf" target="_blank">List of Closed Extra-Mural Projects at NIAB (2025-26)</a></li>
+                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">3.5.2</td>
+                    <td class="niab-item">List of materials available at a reasonable cost of the medium</td>
+                    <td class="niab-details">
+                        
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TAB 4: E-Governance -->
+        <div id="niab-tab4" class="niab-rti-tabcontent">
+            <table class="niab-rti-table">
+                <tr>
+                    <th>S.No.</th>
+                    <th>Item</th>
+                    <th>Disclosure Details</th>
+                </tr>
+                <tr>
+                    <td colspan="3" class="niab-section-header">4. E-Governance</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">4.1 Language in which Information Manual/Handbook Available
+                        [F No. 1/6/2011-IR dt. 15.4.2013]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.1.1</td>
+                    <td class="niab-item">English</td>
+                    <td class="niab-details"><a href="#" target="_blank">Annual Reports<br> Annual Accounts, </a> <br> <a href="#" target="_blank">Suo Moto Disclosure page</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.1.2</td>
+                    <td class="niab-item">Hindi</td>
+                    <td class="niab-details">Annual Reports<br> Annual Accounts
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.1.3</td>
+                    <td class="niab-item">Vernacular / Local Language</td>
+                    <td class="niab-details">Annual Reports<br>Annual Accounts
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">4.2 When was the information Manual/Handbook last updated?
+                    </td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.2.1</td>
+                    <td class="niab-item">Last Date of Annual updating</td>
+                    <td class="niab-details">2026 </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">4.3 Information available in Electronic Form [Section
+                        4(1)(b)(xiv)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.3.1</td>
+                    <td class="niab-item">Details of information available in electronic form</td>
+                    <td class="niab-details" rowspan="3" style="vertical-align: middle;">Documents are accessible to the public in the Electronic Form. <a href="https://www.niab.res.in/facilities_cif/"
+                            target="_blank">Click here to view</a> all documents as per section 1.5.1 and 1.5.3</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.3.2</td>
+                    <td class="niab-item">Name/ title of the document/record/ other information</td>
+                    <td class="niab-details"></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.3.3</td>
+                    <td class="niab-item">Location where available</td>
+                    <td class="niab-details"></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">4.4 Particulars of Facilities available to Citizens for
+                        obtaining information [Section 4(1)(b)(xv)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.4.1</td>
+                    <td class="niab-item">Name & location of the facilities</td>
+                    <td class="niab-details">Dr Girish K Radhakrishnan
+                        <br>1st Floor Administrative Block,<br> NIAB,
+                        Hyderabad</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.4.2</td>
+                    <td class="niab-item">Details of information made available</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/facilities_cif/" target="_blank">Click here to view</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.4.3</td>
+                    <td class="niab-item">Working hours of the facility</td>
+                    <td class="niab-details">Monday to Friday 09:00 AM to 05:30 PM</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.4.4</td>
+                    <td class="niab-item">Contact person & contact details (Phone, fax email)</td>
+                    <td class="niab-details">Dr Girish K Radhakrishnan<br>
+Phone: +91 40 2312 0142<br>
+Fax: +91 40 2312 0130<br>
+Email: girish[at]niab[dot]org[dot]in</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">4.5 Such other information as may be prescribed under
+                        Section 4(i) (b)(xvii)</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.5.1</td>
+                    <td class="niab-item">Grievance redressal mechanism</td>
+                    <td class="niab-details"><a href="#" target="_blank">Grievance Cell</a><br><a href="#"
+                            target="_blank">Women Cell</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.5.2</td>
+                    <td class="niab-item">Details of applications received under RTI and information provided</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/06/2025-26-Returns-1.pdf"
+                            target="_blank">For Year 2025-26</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.5.3</td>
+                    <td class="niab-item">List of completed schemes/ projects/ Programmes</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/06/ClosedProjectDetailsAsOn_31.03.2026.pdf"
+                            target="_blank">List of completed projects 2025-26</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.5.4</td>
+                    <td class="niab-item">List of schemes/ projects/ programme underway</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/wp-content/uploads/2026/04/EMR-Running-project-details-as-on-date.pdf"
+                            target="_blank">List of ongoing projects 2025-26</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.5.5</td>
+                    <td class="niab-item">Details of all contracts entered into</td>
+                    <td class="niab-details">Detail of Works Executed in Financial Year 2025-26. <a href="#"
+                            target="_blank">Click here to view details(2025-26)</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.5.6</td>
+                    <td class="niab-item">Annual Report</td>
+                    <td class="niab-details"><a href="https://www.niab.res.in/annualreports/" target="_blank">Annual
+                            Report</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.5.7</td>
+                    <td class="niab-item">Frequently Asked Question (FAQs)</td>
+                    <td class="niab-details"><a href="#" target="_blank">Click here to view the FAQs.</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.5.8</td>
+                    <td class="niab-item">Any other information (Citizen’s Charter, RFD, Six monthly reports,
+                        Performance)</td>
+                    <td class="niab-details">A Citizens' Charter represents the commitment of the institute towards
+                        standard, quality and time frame of service delivery. Complete details of timelines are given in
+                        the Academic & Activities Calendars.<br><br>B.Tech, M.Tech, DD, PhD Admissions related
+                        information and websites:<br>UG Admissions: <a href="https://josaa.nic.in"
+                            target="_blank">josaa.nic.in</a>, <a href="https://csab.nic.in"
+                            target="_blank">csab.nic.in</a><br>PG Admissions: <a href="https://ccmt.admissions.nic.in"
+                            target="_blank">ccmt.admissions.nic.in</a> (M.Tech), <a
+                            href="https://ccmn.admissions.nic.in" target="_blank">ccmn.admissions.nic.in</a>
+                        (M.Sc)<br>MBA: <a href="https://nith.ac.in/mba-admissions"
+                            target="_blank">nith.ac.in/mba-admissions</a><br>PhD: <a
+                            href="https://admissions.nith.ac.in" target="_blank">admissions.nith.ac.in</a><br><br>Six
+                        Monthly Reports on the Performance: The institute prepares quarterly, six monthly and yearly
+                        reports on the targets achieved.<br><br>Performance against the Benchmarks set in the Citizen’s
+                        Charter: Its results are seen in admission trends, wherein 100% seats at UG level get filled.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">4.6 Receipt & Disposal of RTI Applications and Appeals [F.
+                        No. 1/6/2011-IR dt. 15.04.2013]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.6.1</td>
+                    <td class="niab-item">Details of applications received and disposed</td>
+                    <td class="niab-details">The Details of RTI Applications received and information provided for the
+                        year 2025-26</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.6.2</td>
+                    <td class="niab-item">Details of appeals received, and orders issued</td>
+                    <td class="niab-details"><a href="#" target="_blank">Click here to view the details of appeals
+                            received and information provided 2025-26.</a></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">4.7 Replies to Questions asked in the Parliament [Section
+                        4(1)(d)(2)]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">4.7.1</td>
+                    <td class="niab-item">Details of questions asked and replies given</td>
+                    <td class="niab-details"><a href="#" target="_blank">Click here to view the queries received from
+                            the Parliament and replies provided by the Institute (2025-26)</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TAB 5: Information as may be Prescribed -->
+        <div id="niab-tab5" class="niab-rti-tabcontent">
+            <table class="niab-rti-table">
+                <tr>
+                    <th>S.No.</th>
+                    <th>Item</th>
+                    <th>Disclosure Details</th>
+                </tr>
+                <tr>
+                    <td colspan="3" class="niab-section-header">5. Information as may be Prescribed</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">5.1 Such other Information as may be Prescribed [F. No.
+                        1/2/2016-IR dt. 17.8.2016, F No. 1/6/2011-IR dt. 15.4.2013]</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">5.1.1</td>
+                    <td class="niab-item">Name and details of (a) Current CPIO and FAAs, (b) Earlier CPIO and FAAs from
+                        1.1.2025</td>
+                    <td class="niab-details">5.1.1 (a) <a
+                            href="https://www.niab.res.in/wp-content/uploads/2026/06/5.1.1a.pdf" target="_blank">Click
+                            here to view</a><br>5.1.1 (b) <a href="#" target="_blank">Click here to view</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">5.1.2</td>
+                    <td class="niab-item">Details of third-party audit of voluntary disclosure (a) Dates of audit
+                        carried out (b) Report of the audit carried out</td>
+                    <td class="niab-details"><strong>2024-25:</strong><br>(a) Dates of audit carried out: 10 & 12 April,
+                        2025<br>(b) Report of the RTI Audit carried out 2024-25.<br><br><strong>2023-24:</strong><br>(a)
+                        Dates of audit carried out: 24 & 31 May 2024. <a href="#" target="_blank">RTI Summary
+                            Report</a><br>(b) Report of the audit carried out: <a href="#" target="_blank">RTI Audit
+                            Report</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">5.1.3</td>
+                    <td class="niab-item">Appointment of Nodal Officers not below the rank of Joint Secretary/
+                        Additional HoD</td>
+                    <td class="niab-details">Dr. Raj Kumar Jarial (Nodal Officer)<br>Phone No. 01972-254538, Email ID:
+                        jarial@nith.ac.in<br><br><a href="#" target="_blank">Central Public Information Officer and
+                            Nodal Officer (Office Order)</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">5.1.4</td>
+                    <td class="niab-item">Consultancy committee of key stake holders for advice on Suo Moto Disclosure
+                    </td>
+                    <td class="niab-details"><a href="#" target="_blank">Office Order</a></td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">5.1.5</td>
+                    <td class="niab-item">Committee of PIOs/FAAs with rich experience in RTI to identify frequently
+                        sought information under RTI</td>
+                    <td class="niab-details"><a href="#" target="_blank">Click here to view</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TAB 6: Information Disclosed on Own Initiative -->
+        <div id="niab-tab6" class="niab-rti-tabcontent">
+            <table class="niab-rti-table">
+                <tr>
+                    <th>S.No.</th>
+                    <th>Item</th>
+                    <th>Disclosure Details</th>
+                </tr>
+                <tr>
+                    <td colspan="3" class="niab-section-header">6. Information Disclosed on Own Initiative</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">6.1 Item / information disclosed so that public have minimum
+                        resort to use of RTI Act to obtain information</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">6.1.1</td>
+                    <td class="niab-item">Item / information disclosed so that public have minimum resort to use of RTI
+                        Act to obtain information</td>
+                    <td class="niab-details">Please click on the following links to view the details:<br><a
+                            href="https://nith.irins.org/" target="_blank">https://nith.irins.org/</a><br><a
+                            href="https://www.niab.res.in/recruitment/" target="_blank">Recruitment</a><br><a
+                            href="https://www.niab.res.in/people/" target="_blank">People</a><br><a
+                            href="https://www.niab.res.in/people2/" target="_blank">People 2</a><br>Guest
+                        House<br>Insurance/Medical Benefits</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" class="niab-sub-header">6.2 Guidelines for Indian Government Websites (GIGW) is
+                        followed</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">6.2.1</td>
+                    <td class="niab-item">Whether STQC certification obtained and its validity</td>
+                    <td class="niab-details">Not Met</td>
+                </tr>
+                <tr>
+                    <td class="niab-sno">6.2.2</td>
+                    <td class="niab-item">Does the website show the certificate on the Website?</td>
+                    <td class="niab-details">Not Met</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function niabOpenTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementById("niab-rti-wrapper").getElementsByClassName("niab-rti-tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("niab-active-content");
+        }
+        tablinks = document.getElementById("niab-rti-wrapper").getElementsByClassName("niab-rti-tab");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("niab-active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        document.getElementById(tabName).classList.add("niab-active-content");
+        evt.currentTarget.classList.add("niab-active");
+    }
+</script>
